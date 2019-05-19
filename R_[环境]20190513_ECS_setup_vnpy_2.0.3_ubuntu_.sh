@@ -37,14 +37,20 @@ then
 fi
 
 # 'gcc要用gcc-7 --> https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5'
-$SUDO apt-get install -y software-properties-common python-software-properties
-$SUDO add-apt-repository ppa:ubuntu-toolchain-r/test
-$SUDO apt update 
-$SUDO apt install g++-7 -y
-$SUDO update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
-$SUDO update-alternatives --config gcc
-ls -la /usr/bin/ | grep -oP "[\S]*(gcc|g\+\+)(-[a-z]+)*[\s]" | xargs $SUDO bash -c 'for link in ${@:1}; do ln -s -f "/usr/bin/${link}-${0}" "/usr/bin/${link}"; done' 7
+if gcc --version | grep gcc | grep 7
+then
+    gcc --version | grep gcc
+else
+    $SUDO apt-get install -y software-properties-common python-software-properties
+    $SUDO add-apt-repository ppa:ubuntu-toolchain-r/test
+    $SUDO apt update 
+    $SUDO apt install g++-7 -y
+    $SUDO update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+    $SUDO update-alternatives --config gcc
+    ls -la /usr/bin/ | grep -oP "[\S]*(gcc|g\+\+)(-[a-z]+)*[\s]" | xargs $SUDO bash -c 'for link in ${@:1}; do ln -s -f "/usr/bin/${link}-${0}" "/usr/bin/${link}"; done' 7
+fi
 
+# 安装其他Linux库
 apt install -y screen mongodb libboost-all-dev cmake git libsnappy-dev python-snappy build-essential gawk python3 python3-pip python3-dev libpython3-dev ubuntu-desktop python-psycopg2
   
 apt --fix-broken install -y
@@ -124,9 +130,5 @@ echo '
 + 不能用"conda install -y -c developer ta-lib"，这样的话会把python降级到3.5，与vnpy不兼容
 + vnpy的install.sh中会下载ta-lib的代码并编译，但在非root的用户下编译会出权限错误
 + 如果没有先下载源代码编译，直接用pip install ta-lib的话会报错找不到文件，原因是要用gcc-7
-
-
-
 '
-
 
