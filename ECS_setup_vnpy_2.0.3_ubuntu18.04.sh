@@ -2,7 +2,9 @@
 
 echo '
 + 如何使用: 将本文件命名为env.sh，然后用root用户运行"bash env.sh"
-+ 测试通过的环境: 阿里云ECS + Ubuntu 18.04 + root用户
++ 测试通过的环境: 
+  1.阿里云ECS + Ubuntu 18.04 + root用户 (全自动运行本脚本即可)
+  2.PC + Ubuntu 16.04 + 非root用户 （脚本执行完之后有手工操作，见appendix)
 + 2019.05.18 by 胖子笑
 '
 
@@ -51,8 +53,13 @@ else
 fi
 
 # 安装其他Linux库
-apt install -y screen mongodb libboost-all-dev cmake git libsnappy-dev python-snappy build-essential gawk python3.7 python3-pip python3.7-dev libpython3.7-dev  ubuntu-desktop python-psycopg2
-  
+$SUDO apt install -y screen mongodb libboost-all-dev cmake git libsnappy-dev python-snappy build-essential ubuntu-desktop python-psycopg2 libxpm-dev libxext-dev gawk 
+if uname -a | grep "16.04" ; then 
+   echo '*** Action Needed: check appendix section of this file and setup LD_LIBRAY_PATH'
+else
+    $SUDO apt install -y python3-pip python3.7 python3.7-dev libpython3.7-dev  
+fi
+
 apt --fix-broken install -y
 apt autoremove -y
 
@@ -138,9 +145,11 @@ echo '
 + 如果没有先下载源代码编译，直接用pip install ta-lib的话会报错找不到文件，原因是要用gcc-7
 
 ++++ Ubuntu 16.04 +++
-用ubuntu 16.04会在运行时报错：
+用ubuntu 16.04会在运行时会报错：
 ImportError: libpython3.7m.so.1.0: cannot open shared object file: No such file or directory
-要解决需要安装libpython3.7-dev，但是这个包只在ubuntu18.04里面有，16.04不支持。因此在ubuntu16.04里面就不要装vnpy2.x了
-
++ 解决方法1： 需要安装libpython3.7-dev，但是这个包只在ubuntu18.04里面有，16.04不支持。
++ 解决方法2：在conda下面find一下libpython3.7m.so.1.0的位置，然后修改~/.bashrc
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/Data/System/Programs/anaconda3/envs/py37_quant/lib
+  注意.so的位置是envs里的那个，不是anaconda3/lib里的那个（不然会程序崩溃)
 '
 
