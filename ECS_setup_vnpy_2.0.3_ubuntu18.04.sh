@@ -51,7 +51,7 @@ else
 fi
 
 # 安装其他Linux库
-apt install -y screen mongodb libboost-all-dev cmake git libsnappy-dev python-snappy build-essential gawk python3 python3-pip python3-dev libpython3-dev ubuntu-desktop python-psycopg2
+apt install -y screen mongodb libboost-all-dev cmake git libsnappy-dev python-snappy build-essential gawk python3.7 python3-pip python3.7-dev libpython3.7-dev  ubuntu-desktop python-psycopg2
   
 apt --fix-broken install -y
 apt autoremove -y
@@ -73,13 +73,15 @@ bash ./install.sh
 
 
 # ’********** 6.补丁解决vnpy2.0.3缺ctp的.so的问题 **********'
-cd vnpy/api/ctp
-wget -c https://github.com/hlxstc/vnpy/raw/c9e22d3a2a2d1d047db133d7201f893483e05fc5/vnpy/api/ctp/vnctpmd.cpython-37m-x86_64-linux-gnu.so
-wget -c https://github.com/hlxstc/vnpy/raw/c9e22d3a2a2d1d047db133d7201f893483e05fc5/vnpy/api/ctp/vnctptd.cpython-37m-x86_64-linux-gnu.so
 mv vnpy/api/ctp/libthostmduserapi_se.so vnpy/api/ctp/libthostmduserapi.so 
 mv vnpy/api/ctp/libthosttraderapi_se.so vnpy/api/ctp/libthosttraderapi.so
 
+cd vnpy/api/ctp
+wget -c https://github.com/hlxstc/vnpy/raw/c9e22d3a2a2d1d047db133d7201f893483e05fc5/vnpy/api/ctp/vnctpmd.cpython-37m-x86_64-linux-gnu.so
+wget -c https://github.com/hlxstc/vnpy/raw/c9e22d3a2a2d1d047db133d7201f893483e05fc5/vnpy/api/ctp/vnctptd.cpython-37m-x86_64-linux-gnu.so
+
 # ‘********** 7.放一个helloworld文件 **********'
+cd && cd vnpy*
 echo '
 from vnpy.event import EventEngine
 from vnpy.trader.engine import MainEngine
@@ -134,5 +136,11 @@ echo '
 + 不能用"conda install -y -c developer ta-lib"，这样的话会把python降级到3.5，与vnpy不兼容
 + vnpy的install.sh中会下载ta-lib的代码并编译，但在非root的用户下编译会出权限错误
 + 如果没有先下载源代码编译，直接用pip install ta-lib的话会报错找不到文件，原因是要用gcc-7
+
+++++ Ubuntu 16.04 +++
+用ubuntu 16.04会在运行时报错：
+ImportError: libpython3.7m.so.1.0: cannot open shared object file: No such file or directory
+要解决需要安装libpython3.7-dev，但是这个包只在ubuntu18.04里面有，16.04不支持。因此在ubuntu16.04里面就不要装vnpy2.x了
+
 '
 
