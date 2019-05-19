@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 echo '
-+ 如何使用: 将本文件命名为env.sh，然后用root用户运行"bash env.sh"
++ 如何使用: 在解压出来的vnpy文件夹最上层目录中运行本文件
 + 测试通过的环境: 
   1.阿里云ECS + Ubuntu 18.04 + root用户 (全自动运行本脚本即可)
-  2.PC + Ubuntu 16.04 + 非root用户 （脚本执行完之后有手工操作，见appendix)
+  2.PC + Ubuntu 16.04 + 非root用户 （脚本执行完后有手工操作，见appendix)
 + 2019.05.18 by 胖子笑
 '
 
