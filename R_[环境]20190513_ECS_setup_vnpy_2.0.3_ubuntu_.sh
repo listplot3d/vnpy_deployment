@@ -37,7 +37,6 @@ then
 fi
 
 # 'gcc要用gcc-7 --> https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5'
-SUDO=
 $SUDO apt-get install -y software-properties-common python-software-properties
 $SUDO add-apt-repository ppa:ubuntu-toolchain-r/test
 $SUDO apt update 
