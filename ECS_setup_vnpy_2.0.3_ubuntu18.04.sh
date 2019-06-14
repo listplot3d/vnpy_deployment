@@ -53,7 +53,8 @@ else
 fi
 
 # 安装其他Linux库
-$SUDO apt install -y screen mongodb libboost-all-dev cmake git libsnappy-dev python-snappy build-essential ubuntu-desktop python-psycopg2 libxpm-dev libxext-dev gawk 
+$SUDO apt update 
+$SUDO apt install -y git screen mongodb libboost-all-dev cmake git libsnappy-dev python-snappy build-essential ubuntu-desktop python-psycopg2 libxpm-dev libxext-dev gawk 
 if uname -a | grep "16.04" ; then 
    echo '*** Action Needed: check appendix section of this file and setup LD_LIBRAY_PATH'
 else
