@@ -12,6 +12,7 @@ echo '
 # ’VNPY (注意:若网速慢，从github下载下来时可能解压有问题.因此这部分网速慢时最好手工做)'
 VNPY_PKG_NAME='v2.0.3.tar.gz' 
 wget -c https://github.com/vnpy/vnpy/archive/$VNPY_PKG_NAME
+#git clone https://github.com/listplot3d/vnpy.git
 
 # ‘解压VNPY'
 ls *.tar.gz | xargs -n1 tar -xzvf  
