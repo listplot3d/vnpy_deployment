@@ -68,14 +68,14 @@ apt autoremove -y
 
 # ‘********** 4.安装Python依赖库 **********'
 # ’补充安装vnpy安装时必须或后期需要，但install.sh中未包含的依赖项'
-conda install -y libgfortran==1 matplotlib qtpy jupyter requests
+conda install -y libgfortran==1 matplotlib qtpy jupyter requests cached-property
 
 # ‘********** 5.安装VNPY **********'
 cd vnpy* 
 
 #psycopg2用vnpy的编译装法，在本机上会通不过，因此直接装binary
 cat requirements.txt | grep -v psycopg2 > requirements1.txt && mv requirements1.txt requirements.txt 
-yes | pip install psycopg2-binary
+yes | pip install psycopg2-binary 
 
 #终于开始装vnpy了
 bash ./install.sh
