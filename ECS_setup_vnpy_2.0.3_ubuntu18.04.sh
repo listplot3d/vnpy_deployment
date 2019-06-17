@@ -95,7 +95,9 @@ echo '
 from vnpy.event import EventEngine
 from vnpy.trader.engine import MainEngine
 from vnpy.trader.ui import MainWindow, create_qapp
+
 from vnpy.gateway.ctp import CtpGateway
+# from vnpy.gateway.jyt import JYTGateway
 
 from vnpy.app.cta_strategy import CtaStrategyApp
 from vnpy.app.data_recorder import DataRecorderApp
@@ -110,7 +112,9 @@ def main():
     event_engine = EventEngine()
     main_engine = MainEngine(event_engine)
     
+    # main_engine.add_gateway(JYTGateway)
     main_engine.add_gateway(CtpGateway)
+
     main_engine.add_app(AlgoTradingApp)
     main_engine.add_app(CsvLoaderApp)
     main_engine.add_app(CtaBacktesterApp)
